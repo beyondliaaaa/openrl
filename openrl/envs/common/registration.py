@@ -77,7 +77,11 @@ def make(
             id=id, env_num=env_num, render_mode=convert_render_mode, cfg=cfg, **kwargs
         )
     else:
-        raise NotImplementedError(f"env {id} is not supported.")
+        from openrl.envs.mpe import make_mpe_envs
+
+        env_fns = make_mpe_envs(
+            id=id, env_num=env_num, render_mode=convert_render_mode, **kwargs
+        )
 
     if asynchronous:
         env = AsyncVectorEnv(env_fns, render_mode=render_mode)
